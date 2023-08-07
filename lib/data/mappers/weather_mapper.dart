@@ -23,7 +23,9 @@ extension WeatherMapper on WeatherDto {
         formattedTemperature,
         iconPath,
         animationPath,
-        weather?.first.description ?? '',
+        weather?.first.description,
+        main?.humidity,
+        main?.pressure,
       );
     }
   }

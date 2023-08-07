@@ -49,21 +49,12 @@ class DetailsScreen extends StatelessWidget {
         body: Column(
           children: [
             const SizedBox(height: 8),
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Lottie.asset(entity.animationPath, height: 100),
-                Text(
-                  entity.temperature,
-                  style: const TextStyle(
-                    fontSize: 64,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ],
-            ),
-            Center(
-              child: Text(entity.description),
+            _generalInfo(
+              entity.animationPath,
+              entity.temperature,
+              entity.description,
+              entity.humidity,
+              entity.pressure,
             ),
           ],
         ),
@@ -72,4 +63,35 @@ class DetailsScreen extends StatelessWidget {
   }
 
   WeatherEntity get entity => Get.arguments as WeatherEntity;
+
+  Widget _generalInfo(
+    String animationPath,
+    String temperature,
+    String? description,
+    num? humidity,
+    num? pressure,
+  ) {
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Lottie.asset(animationPath, height: 100),
+        Text(
+          temperature,
+          style: const TextStyle(
+            fontSize: 64,
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (description != null) Text(description.capitalize ?? ''),
+            if (humidity != null) Text('Humidity: $humidity%'),
+            if (pressure != null) Text('Pressure: $pressure'),
+          ],
+        ),
+      ],
+    );
+  }
 }
