@@ -17,4 +17,14 @@ class WeatherRepository {
       return Future.error(e.toString());
     }
   }
+
+  Future getForecast(String city) async {
+    try {
+      final dto = await apiClient.getForecast(city);
+      print('dto = $dto');
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      return Future.error(e.toString());
+    }
+  }
 }

@@ -9,6 +9,12 @@ part 'weather_api_client.g.dart';
 abstract class WeatherApiClient {
   factory WeatherApiClient(Dio dio, {String baseUrl}) = _WeatherApiClient;
 
-  @GET('weather?units=metric&appid=be7ee777fd9edabedc1e0465133be3a8')
+  @GET('weather?units=$_units&appid=$_appId')
   Future<WeatherDto> getWeather(@Query('q') String city);
+
+  @GET('forecast?units=$_units&appid=$_appId')
+  Future getForecast(@Query('q') String city);
 }
+
+const _appId = '30e90e81acda4890cf29346bba889f29';
+const _units = 'metric';

@@ -28,6 +28,8 @@ class HomeController extends GetxController {
           .toList();
 
       loader.success();
+
+      final daily = await repository.getForecast('london');
     } catch (error) {
       loader.error('$error');
       debugPrint('error: $error');
