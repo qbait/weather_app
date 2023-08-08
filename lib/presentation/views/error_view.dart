@@ -24,7 +24,7 @@ class ErrorView extends StatelessWidget {
             left: 24,
           ),
           child: Text(
-            'There was an issue when loading data',
+            'There was an error loading data',
             style: TextStyle(fontSize: 18),
           ),
         )),
