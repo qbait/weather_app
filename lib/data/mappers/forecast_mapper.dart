@@ -6,7 +6,7 @@ extension ForecastMapper on ForecastDto {
   ForecastEntity? toEntity() {
     return ForecastEntity(list!
         .map((dto) {
-          final time = dto.dt_txt != null ? DateTime.parse(dto.dt_txt!) : null;
+          final time = dto.dtTxt != null ? DateTime.parse(dto.dtTxt!) : null;
 
           return ForecastItem(
               time,

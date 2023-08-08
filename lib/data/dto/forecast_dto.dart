@@ -19,13 +19,14 @@ class MyList {
   int? dt;
   Main? main;
   List<Weather>? weather;
-  String? dt_txt;
+  @JsonKey(name:'dt_txt')
+  String? dtTxt;
 
   MyList({
     this.dt,
     this.main,
     this.weather,
-    this.dt_txt,
+    this.dtTxt,
   });
 
   factory MyList.fromJson(Map<String, dynamic> json) => _$MyListFromJson(json);
