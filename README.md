@@ -2,6 +2,13 @@
 
 A Flutter weather project.
 
+The app is simple, but is ready to scale. It shows a modern approach to developing mobile apps using Flutter.
+
+https://github.com/qbait/weather_app/assets/2264901/bdb6c648-5a95-4970-a56e-459833efcf0c
+
+
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
