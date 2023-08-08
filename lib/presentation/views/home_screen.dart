@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/presentation/views/bottom_scrim.dart';
 import 'package:weather_app/presentation/views/city_image.dart';
+import 'package:weather_app/presentation/views/error_view.dart';
 import 'package:weather_app/presentation/views/loading_view.dart';
 import 'package:weather_app/presentation/controllers/home_controller.dart';
 import 'package:weather_app/navigation/nav.dart';
@@ -91,6 +92,7 @@ class HomeScreen extends GetView<HomeController> {
                 )
                 .toList(),
           ),
+          errorView: const ErrorView(),
         ),
       ),
     );
