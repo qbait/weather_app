@@ -6,18 +6,25 @@ The app is simple, but is ready to scale. It shows a modern approach to developi
 
 https://github.com/qbait/weather_app/assets/2264901/bdb6c648-5a95-4970-a56e-459833efcf0c
 
+## Packages used
+
+* [get][0] for State Management, Route Management, Dependency Injection, Utils.
+* [retrofit][1] for REST api communication.
+* [json_serializable][2] for serializing JSON.
+* [lottie][3] for animations.
 
 
+[0]: https://pub.dev/packages/get
+[1]: https://pub.dev/packages/retrofit
+[2]: https://pub.dev/packages/json_serializable
+[3]: https://pub.dev/packages/lottie
 
-## Getting Started
+## TODO
 
-This project is a starting point for a Flutter application.
+* Tests
+* Localizations for labels and data formatting
+* Better UX for a weather forecast
 
-A few resources to get you started if this is your first Flutter project:
+## Running
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Project uses `build_runner`, please run `flutter pub run build_runner build` before building the project.
