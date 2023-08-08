@@ -25,6 +25,8 @@ https://github.com/qbait/weather_app/assets/2264901/bdb6c648-5a95-4970-a56e-4598
 * Localizations for labels and data formatting
 * Better UX for a weather forecast
 * Extract resources
+* Adaptive design
+
 
 
 ## Running
