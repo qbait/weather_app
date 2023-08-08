@@ -48,28 +48,29 @@ class _WeatherApiClient implements WeatherApiClient {
   }
 
   @override
-  Future<dynamic> getForecast(String city) async {
+  Future<ForecastDto> getForecast(String city) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'q': city};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ForecastDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'forecast?units=metric&appid=30e90e81acda4890cf29346bba889f29',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data;
+            .compose(
+              _dio.options,
+              'forecast?units=metric&appid=30e90e81acda4890cf29346bba889f29',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ForecastDto.fromJson(_result.data!);
     return value;
   }
 

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:weather_app/data/dto/forecast_dto.dart';
 
 import '../dto/weather_dto.dart';
 
@@ -13,7 +14,7 @@ abstract class WeatherApiClient {
   Future<WeatherDto> getWeather(@Query('q') String city);
 
   @GET('forecast?units=$_units&appid=$_appId')
-  Future getForecast(@Query('q') String city);
+  Future<ForecastDto> getForecast(@Query('q') String city);
 }
 
 const _appId = '30e90e81acda4890cf29346bba889f29';

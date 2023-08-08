@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/data/entities/forecast_entity.dart';
 import 'package:weather_app/data/entities/weather_entity.dart';
+import 'package:weather_app/data/mappers/forecast_mapper.dart';
 import 'package:weather_app/data/mappers/weather_mapper.dart';
 import 'package:weather_app/data/remote/weather_api_client.dart';
 
@@ -18,10 +20,10 @@ class WeatherRepository {
     }
   }
 
-  Future getForecast(String city) async {
+  Future<ForecastEntity?> getForecast(String city) async {
     try {
       final dto = await apiClient.getForecast(city);
-      print('dto = $dto');
+      return dto.toEntity();
     } on Exception catch (e) {
       debugPrint(e.toString());
       return Future.error(e.toString());

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:weather_app/data/entities/weather_entity.dart';
+import 'package:weather_app/data/entities/forecast_entity.dart';
+import 'package:weather_app/presentation/controllers/details_controller.dart';
 import 'package:weather_app/presentation/views/bottom_scrim.dart';
+import 'package:weather_app/presentation/views/city_image.dart';
+import 'package:weather_app/presentation/views/loading_view.dart';
 import 'package:weather_app/presentation/views/top_scrim.dart';
-import 'city_image.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends GetView<DetailsController> {
   const DetailsScreen({super.key});
 
   @override
@@ -14,6 +18,8 @@ class DetailsScreen extends StatelessWidget {
     const topBarHeight = 240.0;
     final extendedTopBarHeight =
         topBarHeight + MediaQuery.of(context).viewPadding.top;
+
+    final weatherEntity = controller.weatherEntity;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -27,7 +33,7 @@ class DetailsScreen extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: Text(
-                    entity.city,
+                    weatherEntity.city,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
@@ -36,7 +42,7 @@ class DetailsScreen extends StatelessWidget {
                   background: Stack(
                     children: [
                       CityImage(
-                        assetPath: entity.cityImagePath,
+                        assetPath: weatherEntity.cityImagePath,
                         height: extendedTopBarHeight,
                       ),
                       BottomScrim(height: extendedTopBarHeight),
@@ -46,23 +52,35 @@ class DetailsScreen extends StatelessWidget {
             ),
           ];
         },
-        body: Column(
-          children: [
-            const SizedBox(height: 8),
-            _generalInfo(
-              entity.animationPath,
-              entity.temperature,
-              entity.description,
-              entity.humidity,
-              entity.pressure,
+        body: Obx(
+          () => SingleChildScrollView(
+            child: Column(
+              children: [
+                _generalInfo(
+                  weatherEntity.animationPath,
+                  weatherEntity.temperature,
+                  weatherEntity.description,
+                  weatherEntity.humidity,
+                  weatherEntity.pressure,
+                ),
+                LoadingView(
+                  controller.loader,
+                  Column(
+                      children: controller
+                              .forecastEntity()
+                              ?.items
+                              .map((e) => _forecastItem(e))
+                              .toList() ??
+                          []),
+                  progressView: const SizedBox(),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
-
-  WeatherEntity get entity => Get.arguments as WeatherEntity;
 
   Widget _generalInfo(
     String animationPath,
@@ -92,6 +110,36 @@ class DetailsScreen extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _forecastItem(ForecastItem item) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: ListTile(
+        title: Text(item.time != null
+            ? DateFormat('EEEE, h a').format(item.time!)
+            : ''),
+        subtitle: Text(item.description?.capitalize ?? ''),
+        trailing: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            SvgPicture.asset(
+              item.iconPath,
+              height: 48,
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              item.temperature,
+              style: const TextStyle(fontSize: 24),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

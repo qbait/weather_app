@@ -1,32 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/data/entities/forecast_entity.dart';
 import 'package:weather_app/data/entities/weather_entity.dart';
 import 'package:weather_app/data/repositories/weather_repository.dart';
 
-import '../../core/config.dart';
 import 'loading_controller.dart';
 
-class HomeController extends GetxController {
-  HomeController(this.repository);
+class DetailsController extends GetxController {
+  DetailsController(this.repository);
 
   final WeatherRepository repository;
 
   final loader = LoadingController();
-  final entities = <WeatherEntity>[].obs;
+  WeatherEntity get weatherEntity => Get.arguments as WeatherEntity;
+  final forecastEntity = Rxn<ForecastEntity>();
 
   @override
   void onInit() async {
     loader.loading();
 
     try {
-      entities.value = (await Future.wait(
-        cities.map(
-              (e) async => await repository.getWeather(e),
-        ),
-      ))
-          .whereType<WeatherEntity>()
-          .toList();
-
+      forecastEntity.value = await repository.getForecast(weatherEntity.city);
       loader.success();
     } catch (error) {
       loader.error('$error');
